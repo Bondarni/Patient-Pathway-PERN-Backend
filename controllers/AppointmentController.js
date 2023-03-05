@@ -16,6 +16,28 @@ const CreateAppointment = async (req, res) => {
   }
 }
 
+const GetAppointments = async (req, res) => {
+  try {
+    const appointments = await Appointment.findAll({
+      order: [['date']]
+    })
+    res.send(appointments)
+  } catch (error) {
+    throw error
+  }
+}
+
+const GetAppointmentDetails = async (req, res) => {
+  try {
+    const appointment = await Appointment.findByPk(req.params.appointment_id)
+    res.send(appointment)
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
-  CreateAppointment
+  CreateAppointment,
+  GetAppointments,
+  GetAppointmentDetails
 }
