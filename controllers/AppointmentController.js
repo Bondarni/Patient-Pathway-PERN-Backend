@@ -9,8 +9,9 @@ const CreateAppointment = async (req, res) => {
       doctor_id: doctorId,
       ...req.body
     }
-    let appointment = await Appointment.create(appointmentBody)
-    res.send(appointment)
+    console.log(appointmentBody)
+    // let appointment = await Appointment.create(appointmentBody)
+    // res.send(appointment)
   } catch (error) {
     throw error
   }
@@ -18,9 +19,7 @@ const CreateAppointment = async (req, res) => {
 
 const GetAppointments = async (req, res) => {
   try {
-    const appointments = await Appointment.findAll({
-      order: [['date']]
-    })
+    const appointments = await Appointment.findAll()
     res.send(appointments)
   } catch (error) {
     throw error
