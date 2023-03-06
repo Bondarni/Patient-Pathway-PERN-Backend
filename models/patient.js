@@ -8,19 +8,36 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Patient.belongsToMany(models.Doctor, {
-        as: 'appointments',
-        through: models.Appointment,
-        foreignKey: 'patient_id'
+      Patient.hasMany(models.Appointment, {
+        foreignKey: 'patient_id',
+        as: 'patients',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
     }
   }
   Patient.init(
     {
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
-      password: DataTypes.STRING,
-      email: DataTypes.STRING
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      passwordDigest: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true
+        }
+      }
     },
     {
       sequelize,

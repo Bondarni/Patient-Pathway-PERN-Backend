@@ -1,4 +1,5 @@
 const { Patient } = require('../models')
+const middleware = require('../middleware')
 
 const GetPatients = async (req, res) => {
   try {
@@ -18,15 +19,59 @@ const GetPatientDetails = async (req, res) => {
   }
 }
 
-const CreatePatient = async (req, res) => {
+// const CreatePatient = async (req, res) => {
+//   try {
+//     let patientBody = {
+//       ...req.body
+//     }
+//     const newPatient = await Patient.create(patientBody)
+//     res.send(newPatient)
+//   } catch (error) {
+//     throw error
+//   }
+// }
+
+const RegisterPatient = async (req, res) => {
   try {
-    let patientBody = {
-      ...req.body
-    }
-    const newPatient = await Patient.create(patientBody)
-    res.send(newPatient)
+    const { firstName, lastName, email, password } = req.body
+    let passwordDigest = await middleware.hashPassword(password)
+    const patient = await Patient.create({
+      firstName,
+      lastName,
+      email,
+      passwordDigest
+    })
+    res.send(patient)
   } catch (error) {
     throw error
+  }
+}
+
+const LoginPatient = async (req, res) => {
+  try {
+    const { email, password } = req.body
+    const patient = await Patient.findOne({
+      where: { email: email },
+      raw: true
+    })
+    let matched = await middleware.comparePassword(
+      patient.passwordDigest,
+      password
+    )
+    if (matched) {
+      let payload = {
+        id: patient.id,
+        email: patient.email
+      }
+      let token = middleware.createToken(payload)
+      return res.send({ patient: payload, token })
+    }
+    res.status(401).send({ status: 'Error', msg: 'Incorrect Password' })
+  } catch (error) {
+    console.log(error)
+    res
+      .status(401)
+      .send({ status: 'Error', msg: 'An error has occurred on Login!' })
   }
 }
 
@@ -56,7 +101,9 @@ const DeletePatient = async (req, res) => {
 module.exports = {
   GetPatients,
   GetPatientDetails,
-  CreatePatient,
+  // CreatePatient,
+  RegisterPatient,
+  LoginPatient,
   UpdatePatient,
   DeletePatient
 }

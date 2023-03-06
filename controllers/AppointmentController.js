@@ -9,9 +9,8 @@ const CreateAppointment = async (req, res) => {
       doctor_id: doctorId,
       ...req.body
     }
-    console.log(appointmentBody)
-    // let appointment = await Appointment.create(appointmentBody)
-    // res.send(appointment)
+    let appointment = await Appointment.create(appointmentBody)
+    res.send(appointment)
   } catch (error) {
     throw error
   }
@@ -35,8 +34,33 @@ const GetAppointmentDetails = async (req, res) => {
   }
 }
 
+const UpdateAppointment = async (req, res) => {
+  try {
+    let appointmentId = parseInt(req.params.appointment_id)
+    let updatedAppointment = await Appointment.update(req.body, {
+      where: { id: appointmentId },
+      returning: true
+    })
+    res.send(updatedAppointment)
+  } catch (error) {
+    throw error
+  }
+}
+
+const DeleteAppointment = async (req, res) => {
+  try {
+    let appointmentId = parseInt(req.params.appointment_id)
+    await Appointment.destroy({ where: { id: appointmentId } })
+    res.send({ message: `Deleted Appointment with ID number ${appointmentId}` })
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   CreateAppointment,
   GetAppointments,
-  GetAppointmentDetails
+  GetAppointmentDetails,
+  UpdateAppointment,
+  DeleteAppointment
 }

@@ -8,10 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Doctor.belongsToMany(models.Patient, {
+      Doctor.hasMany(models.Appointment, {
+        foreignKey: 'doctor_id',
         as: 'doctors',
-        through: models.Appointment,
-        foreignKey: 'doctor_id'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
     }
   }
