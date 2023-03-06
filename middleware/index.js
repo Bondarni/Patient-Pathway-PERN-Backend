@@ -28,15 +28,18 @@ const verifyToken = (req, res, next) => {
     let payload = jwt.verify(token, APP_SECRET)
     if (payload) {
       res.locals.payload = payload
-      return next(
-        
-      )
+      return next()
     }
+    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'Verify Token Error!' })
   }
 }
 
 module.exports = {
   hashPassword,
   comparePassword,
-  createToken
+  createToken,
+  verifyToken
 }
