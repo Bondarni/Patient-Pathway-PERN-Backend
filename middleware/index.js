@@ -15,7 +15,13 @@ const comparePassword = async (storedPassword, password) => {
   return passwordMatch
 }
 
+const createToken = (payload) => {
+  let token = jwt.sign(payload, APP_SECRET)
+  return token
+}
+
 module.exports = {
   hashPassword,
-  comparePassword
+  comparePassword,
+  createToken
 }
