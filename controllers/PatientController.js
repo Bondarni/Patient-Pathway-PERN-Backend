@@ -47,6 +47,34 @@ const RegisterPatient = async (req, res) => {
   }
 }
 
+const LoginPatient = async (req, res) => {
+  try {
+    const { email, password } = req.body
+    const patient = await Patient.findOne({
+      where: { email: email },
+      raw: true
+    })
+    let matched = await middleware.comparePassword(
+      patient.passwordDigest,
+      password
+    )
+    if (matched) {
+      let payload = {
+        id: patient.id,
+        email: patient.email
+      }
+      let token = middleware.createToken(payload)
+      return res.send({ patient: payload, token })
+    }
+    res.status(401).send({ status: 'Error', msg: 'Incorrect Password' })
+  } catch (error) {
+    console.log(error)
+    res
+      .status(401)
+      .send({ status: 'Error', msg: 'An error has occurred on Login!' })
+  }
+}
+
 const UpdatePatient = async (req, res) => {
   try {
     let patientId = parseInt(req.params.patient_id)
@@ -75,6 +103,7 @@ module.exports = {
   GetPatientDetails,
   // CreatePatient,
   RegisterPatient,
+  LoginPatient,
   UpdatePatient,
   DeletePatient
 }
