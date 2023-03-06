@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const { application } = require('express')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
@@ -18,6 +19,20 @@ const comparePassword = async (storedPassword, password) => {
 const createToken = (payload) => {
   let token = jwt.sign(payload, APP_SECRET)
   return token
+}
+
+const verifyToken = (req, res, next) => {
+  const { token } = res.locals
+
+  try {
+    let payload = jwt.verify(token, APP_SECRET)
+    if (payload) {
+      res.locals.payload = payload
+      return next(
+        
+      )
+    }
+  }
 }
 
 module.exports = {

@@ -9,9 +9,8 @@ const CreateAppointment = async (req, res) => {
       doctor_id: doctorId,
       ...req.body
     }
-    console.log(appointmentBody)
-    // let appointment = await Appointment.create(appointmentBody)
-    // res.send(appointment)
+    let appointment = await Appointment.create(appointmentBody)
+    res.send(appointment)
   } catch (error) {
     throw error
   }
