@@ -75,6 +75,35 @@ const LoginPatient = async (req, res) => {
   }
 }
 
+const UpdatePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body
+    const patient = await Patient.findByPk(req.params.patient_id)
+    let matched = await middleware.comparePassword(
+      patient.passwordDigest,
+      oldPassword
+    )
+    if (matched) {
+      let passwordDigest = await middleware.hashPassword(newPassword)
+      await patient.update({ passwordDigest })
+      let payload = {
+        id: patient.id,
+        email: patient.email
+      }
+      return res.send({ status: 'Password Updated!', patient: payload })
+    }
+    res
+      .status(401)
+      .send({ status: 'Error', msg: 'Old Password did not match!' })
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({
+      status: 'Error',
+      msg: 'An error has occurred updating password!'
+    })
+  }
+}
+
 const UpdatePatient = async (req, res) => {
   try {
     let patientId = parseInt(req.params.patient_id)
@@ -104,6 +133,7 @@ module.exports = {
   // CreatePatient,
   RegisterPatient,
   LoginPatient,
+  UpdatePassword,
   UpdatePatient,
   DeletePatient
 }
