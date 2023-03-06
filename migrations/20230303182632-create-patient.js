@@ -17,6 +17,22 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      profile_img: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      insurance: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      date_of_birth: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      state: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       passwordDigest: {
         type: Sequelize.STRING,
         allowNull: false
