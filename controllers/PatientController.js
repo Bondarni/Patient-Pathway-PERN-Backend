@@ -1,4 +1,5 @@
 const { Patient } = require('../models')
+const middleware = require('../middleware')
 
 const GetPatients = async (req, res) => {
   try {
@@ -18,13 +19,29 @@ const GetPatientDetails = async (req, res) => {
   }
 }
 
-const CreatePatient = async (req, res) => {
+// const CreatePatient = async (req, res) => {
+//   try {
+//     let patientBody = {
+//       ...req.body
+//     }
+//     const newPatient = await Patient.create(patientBody)
+//     res.send(newPatient)
+//   } catch (error) {
+//     throw error
+//   }
+// }
+
+const RegisterPatient = async (req, res) => {
   try {
-    let patientBody = {
-      ...req.body
-    }
-    const newPatient = await Patient.create(patientBody)
-    res.send(newPatient)
+    const { firstName, lastName, email, password } = req.body
+    let passwordDigest = await middleware.hashPassword(password)
+    const patient = await Patient.create({
+      firstName,
+      lastName,
+      email,
+      passwordDigest
+    })
+    res.send(patient)
   } catch (error) {
     throw error
   }
@@ -56,7 +73,8 @@ const DeletePatient = async (req, res) => {
 module.exports = {
   GetPatients,
   GetPatientDetails,
-  CreatePatient,
+  // CreatePatient,
+  RegisterPatient,
   UpdatePatient,
   DeletePatient
 }
