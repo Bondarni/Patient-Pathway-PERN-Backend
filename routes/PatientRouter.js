@@ -6,8 +6,8 @@ Router.get('/', controller.GetPatients)
 Router.get('/:patient_id', controller.GetPatientDetails)
 Router.get(
   '/session',
-  middleware.stripToken,
   middleware.verifyToken,
+  middleware.stripToken,
   controller.CheckSession
 )
 Router.post('/register', controller.RegisterPatient)

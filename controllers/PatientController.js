@@ -148,7 +148,6 @@ const DeletePatient = async (req, res) => {
 module.exports = {
   GetPatients,
   GetPatientDetails,
-  // CreatePatient,
   RegisterPatient,
   LoginPatient,
   CheckSession,
