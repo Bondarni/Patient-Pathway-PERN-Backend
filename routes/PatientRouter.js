@@ -3,13 +3,13 @@ const controller = require('../controllers/PatientController')
 const middleware = require('../middleware')
 
 Router.get('/', controller.GetPatients)
-Router.get('/:patient_id', controller.GetPatientDetails)
 Router.get(
   '/session',
   middleware.verifyToken,
   middleware.stripToken,
   controller.CheckSession
 )
+Router.get('/details/:patient_id', controller.GetPatientDetails)
 Router.post('/register', controller.RegisterPatient)
 Router.post('/login', controller.LoginPatient)
 Router.put(
