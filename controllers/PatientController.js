@@ -19,18 +19,6 @@ const GetPatientDetails = async (req, res) => {
   }
 }
 
-// const CreatePatient = async (req, res) => {
-//   try {
-//     let patientBody = {
-//       ...req.body
-//     }
-//     const newPatient = await Patient.create(patientBody)
-//     res.send(newPatient)
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
 const RegisterPatient = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body
@@ -130,7 +118,6 @@ const DeletePatient = async (req, res) => {
 module.exports = {
   GetPatients,
   GetPatientDetails,
-  // CreatePatient,
   RegisterPatient,
   LoginPatient,
   UpdatePassword,

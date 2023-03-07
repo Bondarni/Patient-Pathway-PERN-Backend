@@ -10,7 +10,6 @@ Router.post(
   middleware.verifyToken,
   controller.CreateAppointment
 )
-// Router.post('/', middleware.stripToken, middleware.verifyToken, controller.CreateAppointment)
 Router.put(
   '/:appointment_id',
   middleware.stripToken,
