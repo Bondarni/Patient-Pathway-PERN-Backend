@@ -12,6 +12,8 @@ const GetPatients = async (req, res) => {
 
 const GetPatientDetails = async (req, res) => {
   try {
+    console.log(req.params.patient_id)
+    console.log(typeof req.params.patient_id)
     const patientDetail = await Patient.findByPk(req.params.patient_id)
     res.send(patientDetail)
   } catch (error) {
