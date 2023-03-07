@@ -18,6 +18,22 @@ module.exports = {
       clinicName: {
         type: Sequelize.STRING
       },
+      profile_img: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      network: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      specialty: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      state: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

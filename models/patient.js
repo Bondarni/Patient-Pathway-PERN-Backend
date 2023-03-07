@@ -26,6 +26,22 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
+      profile_img: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      insurance: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      date_of_birth: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      state: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       passwordDigest: {
         type: DataTypes.STRING,
         allowNull: false

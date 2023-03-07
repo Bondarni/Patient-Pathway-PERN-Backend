@@ -21,11 +21,24 @@ const GetPatientDetails = async (req, res) => {
 
 const RegisterPatient = async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body
+    const {
+      firstName,
+      lastName,
+      profile_img,
+      insurance,
+      date_of_birth,
+      state,
+      email,
+      password
+    } = req.body
     let passwordDigest = await middleware.hashPassword(password)
     const patient = await Patient.create({
       firstName,
       lastName,
+      profile_img,
+      insurance,
+      date_of_birth,
+      state,
       email,
       passwordDigest
     })
@@ -61,6 +74,11 @@ const LoginPatient = async (req, res) => {
       .status(401)
       .send({ status: 'Error', msg: 'An error has occurred on Login!' })
   }
+}
+
+const CheckSession = async (req, res) => {
+  const { payload } = res.locals
+  res.send(payload)
 }
 
 const UpdatePassword = async (req, res) => {
@@ -120,6 +138,7 @@ module.exports = {
   GetPatientDetails,
   RegisterPatient,
   LoginPatient,
+  CheckSession,
   UpdatePassword,
   UpdatePatient,
   DeletePatient
