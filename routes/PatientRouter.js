@@ -5,8 +5,8 @@ const middleware = require('../middleware')
 Router.get('/', controller.GetPatients)
 Router.get(
   '/session',
-  middleware.stripToken,
   middleware.verifyToken,
+  middleware.stripToken,
   controller.CheckSession
 )
 Router.get('/details/:patient_id', controller.GetPatientDetails)

@@ -29,6 +29,7 @@ const verifyToken = (req, res, next) => {
       res.locals.payload = payload
       return next()
     }
+    console.log(res.locals)
     res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
   } catch (error) {
     console.log(error)
