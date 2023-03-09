@@ -12,26 +12,12 @@ const GetPatients = async (req, res) => {
 
 const GetPatientDetails = async (req, res) => {
   try {
-    console.log(req.params.patient_id)
-    console.log(typeof req.params.patient_id)
     const patientDetail = await Patient.findByPk(req.params.patient_id)
     res.send(patientDetail)
   } catch (error) {
     throw error
   }
 }
-
-// const CreatePatient = async (req, res) => {
-//   try {
-//     let patientBody = {
-//       ...req.body
-//     }
-//     const newPatient = await Patient.create(patientBody)
-//     res.send(newPatient)
-//   } catch (error) {
-//     throw error
-//   }
-// }
 
 const RegisterPatient = async (req, res) => {
   try {
@@ -150,7 +136,6 @@ const DeletePatient = async (req, res) => {
 module.exports = {
   GetPatients,
   GetPatientDetails,
-  // CreatePatient,
   RegisterPatient,
   LoginPatient,
   CheckSession,
