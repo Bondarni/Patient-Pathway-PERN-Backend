@@ -37,7 +37,12 @@ const GetAppointmentDetails = async (req, res) => {
 const GetPatientAppointments = async (req, res) => {
   try {
     const patientAppointments = await Appointment.findAll({
-      where: { patient_id: req.params.patient_id }
+      where: { patient_id: req.params.patient_id },
+      include: {
+        model: Doctor,
+        as: 'doctors',
+        attributes: ['firstName', 'lastName', 'clinicName']
+      }
     })
     res.send(patientAppointments)
   } catch (error) {
