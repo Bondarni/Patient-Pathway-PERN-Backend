@@ -34,6 +34,17 @@ const GetAppointmentDetails = async (req, res) => {
   }
 }
 
+const GetPatientAppointments = async (req, res) => {
+  try {
+    const patientAppointments = await Appointment.findAll({
+      where: { patient_id: req.params.patient_id }
+    })
+    res.send(patientAppointments)
+  } catch (error) {
+    throw error
+  }
+}
+
 const UpdateAppointment = async (req, res) => {
   try {
     let appointmentId = parseInt(req.params.appointment_id)
@@ -62,5 +73,6 @@ module.exports = {
   GetAppointments,
   GetAppointmentDetails,
   UpdateAppointment,
-  DeleteAppointment
+  DeleteAppointment,
+  GetPatientAppointments
 }
