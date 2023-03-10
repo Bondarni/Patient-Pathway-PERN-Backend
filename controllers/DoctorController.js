@@ -54,9 +54,20 @@ const CreateDoctor = async (req, res) => {
   }
 }
 
+const DeleteDoctor = async (req, res) => {
+  try {
+    let doctorId = parseInt(req.params.doctor_id)
+    await Doctor.destroy({ where: { id: doctorId } })
+    res.send({ message: `Deleted Doctor with ID number ${doctorId}` })
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   GetDoctors,
   GetDoctorDetails,
   FindDoctor,
-  CreateDoctor
+  CreateDoctor,
+  DeleteDoctor
 }
